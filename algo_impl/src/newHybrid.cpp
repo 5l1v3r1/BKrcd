@@ -552,6 +552,7 @@ long long newHybrid::newHybridMain(vector<list<int>> const &adjList, int size)
             continue;
         }
 
+        /*
         if (sizeofP == 1){
             int j;
             for (j = newBeginX; j < newBeginP; ++j)
@@ -567,6 +568,7 @@ long long newHybrid::newHybridMain(vector<list<int>> const &adjList, int size)
                 partialClique.pop_back();
             continue;
         }
+        */
 
 
         // 是否调用 BKrcd 的判断条件
@@ -610,7 +612,7 @@ long long newHybrid::newHybridMain(vector<list<int>> const &adjList, int size)
 
     }
 
-    cout << "BKreverseCount BKpivotCount BKreversePortion BKpivotPortion" << endl;
+    cout << endl << "BKreverseCount BKpivotCount BKreversePortion BKpivotPortion" << endl;
     cout << BKreverseCount << " " << BKpivotCount << " ";
     cout << double(BKreverseCount)/(BKreverseCount+BKpivotCount) << " " << double(BKpivotCount) / (BKreverseCount+BKpivotCount) << endl;
     cout << "Recursive Call Count: " << recursiveCallCount << endl;

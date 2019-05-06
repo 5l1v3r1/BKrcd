@@ -588,14 +588,31 @@ void NaiveAlgorithm::listAllMaximalCliquesNaiveRecursive(long long* cliqueCount,
                                     beginX, beginP, beginR, &pisclique);
 
     if (pisclique) {
-        for (int j = beginP; j < beginR; ++j)
-            partialClique.push_back(vertexSets[j]);
-        ExecuteCallBacks(partialClique);
-        processClique(partialClique);
-        (*cliqueCount)++;
-        
-        for (int j = beginP; j < beginR; ++j)
-            partialClique.pop_back();
+        int sizeofP = beginR - beginP;
+        bool commonNeighborInX = false;
+        // 查看X集合中是否有P集合的公共邻居
+        for (int j = beginX; j < beginP; ++j) {
+             int vertexInX = vertexSets[j];
+             int numNeighborsInP = 0;
+             for (int k = 0; k < numNeighbors[vertexInX]; ++k) {
+                 int neighborLocation = vertexLookup[neighborsInP[vertexInX][k]];
+                 if (neighborLocation >= beginP  && neighborLocation < beginR)
+                     numNeighborsInP++;
+             }
+             if (numNeighborsInP == sizeofP) {
+                 commonNeighborInX = true;
+                 break;
+             }
+        }
+        if (!commonNeighborInX) {
+            for (int k = beginP; k < beginR; ++k)
+                partialClique.push_back(vertexSets[k]);
+            ExecuteCallBacks(partialClique);
+            processClique(partialClique);
+            (*cliqueCount)++;
+            for (int k = beginP; k < beginR; ++k)
+                partialClique.pop_back();
+        }
 
         return ;
     }
